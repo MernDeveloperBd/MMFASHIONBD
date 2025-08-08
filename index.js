@@ -14,6 +14,7 @@ const app = express();
 //Middleware
 // ✅ Recommended: use environment variable for client URL
 const allowedOrigins = [
+  'http://localhost:5173',
   'https://mmfashionworld.com',
   'https://www.mmfashionworld.com',
 ];
@@ -583,7 +584,7 @@ async function run() {
       res.send(result)
     })
     // save a product in db
-    app.post('/products', verifyToken,verifyAdmin,verifySeller, async (req, res) => {
+    app.post('/products', verifyToken,verifyAdmin, async (req, res) => {
       const product = req.body;
       const result = await productsCollection.insertOne(product);
       res.send(result)
@@ -612,7 +613,7 @@ async function run() {
       res.send(result)
     })
     // save a order data in db
-    app.post('/orders', verifyToken,verifyAdmin,verifySeller, async (req, res) => {
+    app.post('/orders', verifyToken,verifyAdmin, async (req, res) => {
       const orderInfo = req.body;
       const result = await ordersCollection.insertOne(orderInfo);
       // Send mail
@@ -668,7 +669,7 @@ async function run() {
 
 
     // get all sellers orders by email/a specic customer
-    app.get('/seller-orders/:email', verifyToken,verifySeller, async (req, res) => {
+    app.get('/seller-orders/:email', verifyToken, async (req, res) => {
       const email = req.params.email;
       const query = { seller: email }
       const result = await ordersCollection.aggregate([
