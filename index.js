@@ -14,9 +14,8 @@ const app = express();
 //Middleware
 // ✅ Recommended: use environment variable for client URL
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  // process.env.CLIENT_URL,  // front-end url
+  'https://mmfashionworld.com','https://mmfashionworld.netlify.app',
+   
 ];
 // 🔒 Middleware: CORS Setup
 app.use(cors({
@@ -34,8 +33,6 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan('dev'))
-
-// EmailTemeplate
 
 // Checkout invoice
 const generateCheckoutInvoice = (order) => {
@@ -73,13 +70,14 @@ const generateCheckoutInvoice = (order) => {
         </div>
         <div style="border-bottom: 2px solid #4d7c0f; margin: 10px 0 20px 0;"></div>
 
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between;  margin-bottom: 20px;">
           <div>
             <h3>Customer Info</h3>
             <p><strong>Name:</strong> ${customer?.name || "N/A"}</p>
             <p><strong>Email:</strong> ${customer?.email || "N/A"}</p>
             <p><strong>Phone:</strong> ${customer?.phone || "N/A"}</p>
             <p><strong>Address:</strong> ${customer?.address || "N/A"}</p>
+            <p><strong>Product Details (extra):</strong> ${customer?.productDetails || "N/A"}</p>
           </div>
           <div style="text-align: right;">
             <p><strong>Date:</strong> ${date}</p>
@@ -111,8 +109,8 @@ const generateCheckoutInvoice = (order) => {
           <p>Nawabgonj, Dhaka-1320</p>
           <p>Phone: +8801749889595 | Email: marifamisam@gmail.com</p>
           <p>
-            Website: <a href="https://mmshopbd.com" style="color: #4d7c0f;">mmshopbd.com</a> |
-            Facebook: <a href="https://www.facebook.com/MisamMarifaFashionWorld" style="color: #4d7c0f;">fb.com/haramainkhushbo</a>
+            Website: <a href="https://mmfashionworld.com" style="color: #4d7c0f;">mmfashionworld.com</a> |
+            Facebook: <a href="https://www.facebook.com/MisamMarifaFashionWorld" style="color: #4d7c0f;">fb.com/MisamMarifaFashionWorld</a>
           </p>
         </footer>
       </div>
@@ -138,6 +136,7 @@ const generateCheckoutInvoice = (order) => {
             <p><strong>Email:</strong> ${customer?.email || "N/A"}</p>
             <p><strong>Phone:</strong> ${customer?.phone || "N/A"}</p>
             <p><strong>Address:</strong> ${customer?.address || "N/A"}</p>
+            <p><strong>Product Details (extra):</strong> ${customer?.productDetails || "N/A"}</p>
           </div>
           <div style="text-align: right;">
             <p><strong>Date:</strong> ${date}</p>
@@ -170,19 +169,18 @@ const generateCheckoutInvoice = (order) => {
         </div>
 
         <footer style="margin-top: 40px; font-size: 13px; color: #555; border-top: 1px solid #ccc; padding-top: 15px; text-align: center;">
-          <p><strong>Haramain Khushbo</strong></p>
-          <p>Molla Complex, Sher-e-Bangla Road, Nirala More, Khulna-9000</p>
-          <p>Phone: +8801793000111 | Email: haramainkhusbu@gmail.com</p>
+          <p><strong>Misam & Marifa's Fashion World</strong></p>
+          <p>Nawabgonj, Dhaka-1320</p>
+          <p>Phone: +880174-9889595 | Email: marifamisam@gamil.com</p>
           <p>
-            Website: <a href="https://orbitshiftbd.com" style="color: #4d7c0f;">orbitshiftbd.com</a> |
-            Facebook: <a href="https://facebook.com/haramainkhushbo" style="color: #4d7c0f;">fb.com/haramainkhushbo</a>
+            Website: <a href="https://mmfashionworld.com" style="color: #4d7c0f;">mmfashionworld.com</a> |
+            Facebook: <a href="https://www.facebook.com/MisamMarifaFashionWorld" style="color: #4d7c0f;">fb.com/MisamMarifaFashionWorld</a>
           </p>
         </footer>
       </div>
     `;
   }
 };
-
 
 // Send to Admin
 const generateContactEmailToAdmin = (data) => `
@@ -219,7 +217,7 @@ const generateContactEmailToAdmin = (data) => `
 
     <div style="padding: 15px 20px; background-color: #f0f0f0; text-align: center; font-size: 13px; color: #777;">
       Sent from your website contact form.<br/>
-      <strong>MM Fashion BD</strong> | <a href="https://mmfashionbd.com" style="color: #4d7c0f;">mmfashionbd.com</a>
+      <strong>MM Fashion BD</strong> | <a href="https://mmfashionworld.com" style="color: #4d7c0f;">mmfashionworld.com</a>
     </div>
   </div>
 `;
@@ -237,7 +235,7 @@ const generateContactEmailToUser = (name) => `
     <div style="padding: 20px; color: #333;">
       <p style="font-size: 16px;">Hi <strong>${name}</strong>,</p>
       <p style="font-size: 15px; line-height: 1.6;">
-        Thank you for contacting <strong>Haramain Khushbo</strong>!<br/>
+        Thank you for contacting <strong>MM Fashion Wrold</strong>!<br/>
         We’ve received your message and our team will get back to you as soon as possible. 💬
       </p>
       <p style="margin-top: 20px; font-size: 15px;">
@@ -245,7 +243,7 @@ const generateContactEmailToUser = (name) => `
       </p>
       <p style="margin-top: 30px;">
         Best regards,<br/>
-        <strong>The Haramain Khushbo Team</strong>
+        <strong>The MM Fashion Wrold Team</strong>
       </p>
     </div>
 
@@ -255,8 +253,8 @@ const generateContactEmailToUser = (name) => `
       <p style="margin: 2px 0;">Nawabgonj, Dhaka-1320</p>
       <p style="margin: 2px 0;">Phone: +8801749889595 | Email: marifamisam@gmail.com</p>
       <p style="margin: 2px 0;">
-        Website: <a href="https://mmfashionbd.com" target="_blank" style="color: #4d7c0f;">mmfashionbd.com</a> |
-        Facebook: <a href="https://www.facebook.com/MisamMarifaFashionWorld" target="_blank" style="color: #4d7c0f;">fb.com/haramainkhushbo</a>
+        Website: <a href="https://mmfashionworld.com" target="_blank" style="color: #4d7c0f;">mmfashionworld.com</a> |
+        Facebook: <a href="https://www.facebook.com/MisamMarifaFashionWorld" target="_blank" style="color: #4d7c0f;">fb.com/MisamMarifaFashionWorld</a>
       </p>
       <p style="margin-top: 10px; color: #999;">This is an automated confirmation email.</p>
     </footer>
@@ -322,7 +320,7 @@ const sendEmail = (emailAddress, emaildata) => {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId, } = require('mongodb');
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@haramaincluster.pg3jdvj.mongodb.net/?retryWrites=true&w=majority&appName=HaramainCluster`;
+
 const uri = process.env.MONGODB_URL;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -346,27 +344,34 @@ async function run() {
     const cartsCollection = client.db("MMFASHIONBD").collection("carts");
 
     //verify admin middleware
-    const verifyAdmin = async (req, res, next) => {
-      console.log('data from verifytoken middleware', req?.user);
-      const email = req.params.email;
+       const verifyAdmin = async (req, res, next) => {
+      // console.log('data from verifyToken middleware--->', req.user?.email)
+      const email = req.user?.email
       const query = { email }
       const result = await usersCollection.findOne(query)
-      if (!result || result?.role !== 'admin') return res.status(403).send({ message: 'Forbidden access! Admin only action' })
+      if (!result || result?.role !== 'admin')
+        return res
+          .status(403)
+          .send({ message: 'Forbidden Access! Admin Only Actions!' })
+
       next()
-    };
+    }
     //verify seller middleware
-    /*   const verifySeller = async(req, res, next) =>{
-        console.log('data from verifytoken middleware', req?.user);
-        const email = req.params.email;
-        const query = {email}
-         const result = await usersCollection.findOne(query)
-         if(!result || result?.role !== 'seller') return res.status(403).send({message:'Forbidden access! Seller only action'})
-  
-        next()
-      }; */
+     const verifySeller = async (req, res, next) => {
+      // console.log('data from verifyToken middleware--->', req.user?.email)
+      const email = req.user?.email
+      const query = { email }
+      const result = await usersCollection.findOne(query)
+      if (!result || result?.role !== 'seller')
+        return res
+          .status(403)
+          .send({ message: 'Forbidden Access! Seller Only Actions!' })
+
+      next()
+    }
 
     // save or update a user in db
-    app.post('/users/:email', async (req, res) => {
+    app.post('/users/:email',  async (req, res) => {
       const email = req.params.email;
       const query = { email }
       const user = req.body;
@@ -380,7 +385,7 @@ async function run() {
     })
 
     //manage user status or role
-    app.patch('/users/:email', async (req, res) => {
+    app.patch('/users/:email',verifyToken, async (req, res) => {
       const email = req.params.email;
       const query = { email }
       const user = await usersCollection.findOne(query)
@@ -552,8 +557,6 @@ async function run() {
         category: updatedData.category,
         subCategory: updatedData.subCategory,
         description: updatedData.description,
-        image: updatedData.image,
-        image1: updatedData.image1,
         ratings: updatedData.ratings,
       },
     };
@@ -616,8 +619,8 @@ async function run() {
       res.send(result)
     })
     // get all Orders
-    app.get('/orders',verifyToken, async (req, res) => {
-      const result = await ordersCollection.find().toArray();
+    app.get('/orders',verifyToken,verifyAdmin, async (req, res) => {
+      const result = await ordersCollection.find().sort({ _id: -1 }).toArray();
       res.send(result)
     })
     // save a order data in db
@@ -750,7 +753,7 @@ async function run() {
       if (result?.insertedId) {
         // Send to User
         await sendEmail(newContactMessage.email, {
-          subject: "Thanks for contacting Haramain Khushbo",
+          subject: "Thanks for contacting MM Fashion Wrold",
           message: generateContactEmailToUser(newContactMessage.name)
         });
         //To Buyer
@@ -872,7 +875,7 @@ run().catch(console.dir);
 
 
  app.get('/', (req, res) => {
-  res.send("My Haramain Server is Running ")
+  res.send("My MM Fashion World Server is Running ")
 }) 
 
 module.exports = app; 
