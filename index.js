@@ -14,8 +14,8 @@ const app = express();
 //Middleware
 // ✅ Recommended: use environment variable for client URL
 const allowedOrigins = [
-  'https://mmfashionworld.com','https://mmfashionworld.netlify.app',
-   
+  'https://mmfashionworld.com',
+  'https://www.mmfashionworld.com',
 ];
 // 🔒 Middleware: CORS Setup
 app.use(cors({
