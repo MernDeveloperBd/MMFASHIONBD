@@ -14,7 +14,6 @@ const app = express();
 //Middleware
 // ✅ Recommended: use environment variable for client URL
 const allowedOrigins = [
-  'http://localhost:5173',
   'https://mmfashionworld.com',
   'https://www.mmfashionworld.com',
 ];
@@ -613,7 +612,7 @@ async function run() {
       res.send(result)
     })
     // save a order data in db
-    app.post('/orders', verifyToken,verifyAdmin, async (req, res) => {
+    app.post('/orders', verifyToken, async (req, res) => {
       const orderInfo = req.body;
       const result = await ordersCollection.insertOne(orderInfo);
       // Send mail
@@ -771,7 +770,7 @@ async function run() {
     })
 
     // Add to cart API
-    app.post('/cart', async (req, res) => {
+    app.post('/cart', verifyToken, async (req, res) => {
       const { productId, title, price, image, quantity = 1, userId } = req.body;
 
       // Validation
