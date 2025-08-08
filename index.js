@@ -413,19 +413,7 @@ async function run() {
       const totalProducts = await productsCollection.estimatedDocumentCount();
 
       const allOrders = await ordersCollection.find().toArray()
-      /* const totalOrders = allOrders.length;
-      const totalPrice = allOrders.reduce((sum, order) => sum + order.price,0)
-      res.send({totalUser, totalProducts, totalPrice, totalOrders}) */
-      // const totalOrders = allOrder.length
-      // const totalPrice = allOrder.reduce((sum, order) => sum + order.price, 0)
-
-      // const myData = {
-      //   date: '11/01/2025',
-      //   quantity: 12,
-      //   price: 1500,
-      //   order: 3,
-      // }
-      // generate chart data
+     
       const chartData = await ordersCollection
         .aggregate([
           { $sort: { _id: -1 } },
@@ -531,9 +519,9 @@ async function run() {
     })
 
     //get invertory data for admin
-    app.get('/products/admin', verifyToken, async (req, res) => {
+    app.get('/products/admin', verifyToken,verifyAdmin, async (req, res) => {
       const email = req?.user?.email;
-      const result = await productsCollection.find({ 'seller.email': email }).toArray()
+      const result = await productsCollection.find({ 'seller.email': email }).sort({ _id: -1 }).toArray()
       res.send(result)
     })
     //update a product not ok
@@ -595,7 +583,7 @@ async function run() {
       res.send(result)
     })
     // save a product in db
-    app.post('/products', verifyToken, async (req, res) => {
+    app.post('/products', verifyToken,verifyAdmin,verifySeller, async (req, res) => {
       const product = req.body;
       const result = await productsCollection.insertOne(product);
       res.send(result)
@@ -624,7 +612,7 @@ async function run() {
       res.send(result)
     })
     // save a order data in db
-    app.post('/orders', verifyToken, async (req, res) => {
+    app.post('/orders', verifyToken,verifyAdmin,verifySeller, async (req, res) => {
       const orderInfo = req.body;
       const result = await ordersCollection.insertOne(orderInfo);
       // Send mail
@@ -680,7 +668,7 @@ async function run() {
 
 
     // get all sellers orders by email/a specic customer
-    app.get('/seller-orders/:email', verifyToken, async (req, res) => {
+    app.get('/seller-orders/:email', verifyToken,verifySeller, async (req, res) => {
       const email = req.params.email;
       const query = { seller: email }
       const result = await ordersCollection.aggregate([
@@ -839,7 +827,7 @@ async function run() {
     });
 
     // Delete cart item by ID
-    app.delete("/cart-item/:id", async (req, res) => {
+    app.delete("/cart-item/:id",verifyToken, async (req, res) => {
       const id = req.params.id;
       try {
         const result = await cartsCollection.deleteOne({ _id: new ObjectId(id) });
